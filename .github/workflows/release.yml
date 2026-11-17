@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Un tag qui ne correspond pas à package.json publierait un zip mal versionné.
+      - name: Vérifier la version
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Le tag $GITHUB_REF_NAME ne correspond pas à la version $version de package.json"
+            exit 1
+          fi
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Construire le zip
+        run: |
+          mkdir -p staging/tabby-confirm-close
+          cp -r package.json README.md README.fr.md LICENSE dist staging/tabby-confirm-close/
+          cd staging && zip -r "../tabby-confirm-close-${GITHUB_REF_NAME#v}.zip" tabby-confirm-close
+
+      - name: Publier la Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" tabby-confirm-close-*.zip --title "$GITHUB_REF_NAME" --generate-notes
