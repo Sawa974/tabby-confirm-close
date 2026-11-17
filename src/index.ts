@@ -1,5 +1,5 @@
 import { Injectable, NgModule } from '@angular/core'
-import { PlatformService } from 'tabby-core'
+import { PlatformService, TranslateService, MessageBoxOptions } from 'tabby-core'
 import { TerminalDecorator } from 'tabby-terminal'
 
 type TerminalTab = Parameters<TerminalDecorator['attach']>[0]
@@ -11,7 +11,7 @@ type TerminalTab = Parameters<TerminalDecorator['attach']>[0]
  */
 @Injectable()
 export class ConfirmCloseDecorator extends TerminalDecorator {
-    constructor (private platform: PlatformService) {
+    constructor (private platform: PlatformService, private translate: TranslateService) {
         super()
     }
 
@@ -19,13 +19,17 @@ export class ConfirmCloseDecorator extends TerminalDecorator {
         const originalCanClose = tab.canClose.bind(tab)
 
         tab.canClose = async (): Promise<boolean> => {
-            const result = await this.platform.showMessageBox({
+            // Sous Windows, Electron remplace les libellés standard (Close, Cancel) par les boutons natifs, dans la langue du système.
+            const options: MessageBoxOptions & { noLink: boolean } = {
                 type: 'warning',
-                message: `Fermer l'onglet « ${tab.title || 'Terminal'} » ?`,
-                buttons: ['Fermer', 'Annuler'],
+                message: this.translate.instant('Close tab'),
+                detail: tab.title || 'Terminal',
+                buttons: [this.translate.instant('Close'), this.translate.instant('Cancel')],
                 defaultId: 1, // Entrée = Annuler, pour éviter les validations réflexes
                 cancelId: 1,
-            })
+                noLink: true,
+            }
+            const result = await this.platform.showMessageBox(options)
             if (result.response !== 0) {
                 return false
             }
