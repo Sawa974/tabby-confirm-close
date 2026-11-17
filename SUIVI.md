@@ -5,6 +5,7 @@ Fichier de reprise : où en est le plugin, ce qui a été décidé et pourquoi.
 ## Fait
 
 - **v0.1.0** publiée : https://github.com/Sawa974/tabby-confirm-close/releases/tag/v0.1.0
+- **v0.2.0** publiée sur npm et en Release GitHub : boîte dans la langue de Tabby, `noLink`.
 - Release automatique : `.github/workflows/release.yml` se déclenche au push d'un tag `v*`.
 - README en anglais (`README.md`, affiché par GitHub) et en français (`README.fr.md`).
 
@@ -19,11 +20,10 @@ exporté par `tabby-core`, et réutilise les clés que Tabby traduit déjà dans
 
 Types passés en `1.0.197-nightly.1` (Angular 15, rxjs 7) : `npm install` à vide et
 `npm run build` passent. Testé dans Tabby 1.0.238 en français, anglais et allemand. Il reste à
-faire, version `0.2.0` et README déjà à jour :
+faire, la v0.2.0 étant publiée sur npm (https://www.npmjs.com/package/tabby-confirm-close)
+et en Release GitHub :
 
-1. `npm publish` (compte npm d'Olivier ; `prepublishOnly` recompile).
-2. Tag `v0.2.0` poussé : la Release GitHub suit.
-3. Sur npmjs.com, déclarer le Trusted Publisher (GitHub Actions, `release.yml`), puis ajouter au
+1. Sur npmjs.com, déclarer le Trusted Publisher (GitHub Actions, `release.yml`), puis ajouter au
    workflow `id-token: write`, `registry-url` et `npm publish --provenance`.
 
 ## Reste à faire
@@ -38,8 +38,11 @@ faire, version `0.2.0` et README déjà à jour :
     panneaux en parallèle (`Promise.all`), d'où plusieurs boîtes empilées.
 
   À traiter avec la double confirmation, qui a la même cause.
-- **Publication npm**, facultative : seule voie pour que le plugin apparaisse dans le
-  gestionnaire de plugins de Tabby. Le mot-clé `tabby-plugin` est déjà dans `package.json`.
+- Vérifier que le plugin apparaît dans Réglages > Plugins de Tabby (recherche `confirm close`) :
+  fait sur ARKHAM. Sur GROUPEOMICRONE, une copie manuelle numérotée `1.0.0` bloque la mise à
+  jour (le gestionnaire la croit plus récente que la 0.2.0) : Tabby fermé, supprimer
+  `%APPDATA%\tabby\plugins\node_modules\tabby-confirm-close`, puis installer depuis le
+  gestionnaire.
 
 ## Décisions
 
@@ -60,4 +63,6 @@ faire, version `0.2.0` et README déjà à jour :
 
 ## Prochain pas
 
-Finir la traduction de la boîte (étapes ci-dessus), puis publier une v0.2.0.
+Sur GROUPEOMICRONE, remplacer la copie manuelle par l'installation depuis le gestionnaire de
+plugins et tester. Ensuite, au choix : configurer le Trusted Publishing npm, ou attaquer la
+confirmation unique par action de fermeture.
