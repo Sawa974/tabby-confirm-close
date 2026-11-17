@@ -1,0 +1,26 @@
+{
+  "name": "tabby-confirm-close",
+  "version": "0.1.0",
+  "description": "Demande une confirmation avant de fermer un onglet terminal dans Tabby",
+  "keywords": ["tabby-plugin"],
+  "main": "dist/index.js",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Sawa",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/core": "*",
+    "tabby-core": "*",
+    "tabby-terminal": "*"
+  },
+  "devDependencies": {
+    "@angular/core": "^9.1.9",
+    "rxjs": "^6.6.3",
+    "tabby-core": "^1.0.0-nightly",
+    "tabby-settings": "1.0.163",
+    "tabby-terminal": "^1.0.0-nightly",
+    "typescript": "~4.9.5"
+  }
+}
