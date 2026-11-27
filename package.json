@@ -1,30 +1,34 @@
 {
   "name": "tabby-confirm-close",
-  "version": "0.2.0",
-  "description": "Asks for confirmation before closing a terminal tab in Tabby",
-  "repository": { "type": "git", "url": "git+https://github.com/Sawa974/tabby-confirm-close.git" },
+  "version": "0.3.0",
+  "description": "Asks for confirmation before closing a tab or all tabs in Tabby",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sawa974/tabby-confirm-close.git"
+  },
   "homepage": "https://github.com/Sawa974/tabby-confirm-close#readme",
   "bugs": "https://github.com/Sawa974/tabby-confirm-close/issues",
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["tabby-plugin"],
+  "keywords": [
+    "tabby-plugin"
+  ],
   "main": "dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "author": "Sawa",
   "license": "MIT",
   "peerDependencies": {
     "@angular/core": "*",
-    "tabby-core": "*",
-    "tabby-terminal": "*"
+    "tabby-core": "*"
   },
   "devDependencies": {
     "@angular/core": "^15.2.0",
     "rxjs": "^7.8.0",
     "tabby-core": "1.0.197-nightly.1",
-    "tabby-settings": "1.0.197-nightly.1",
-    "tabby-terminal": "1.0.197-nightly.1",
     "typescript": "~4.9.5"
   }
 }

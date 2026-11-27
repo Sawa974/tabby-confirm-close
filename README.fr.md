@@ -5,7 +5,10 @@
 [![npm](https://img.shields.io/npm/v/tabby-confirm-close)](https://www.npmjs.com/package/tabby-confirm-close)
 
 Plugin pour [Tabby](https://github.com/Eugeny/tabby) qui demande une confirmation avant de fermer
-un onglet terminal : local, SSH, Telnet, série.
+un onglet, quel que soit son type : local, SSH, Telnet, série, réglages.
+
+Une seule boîte s'affiche par action de fermeture et liste les onglets concernés : fermer un
+onglet scindé, utiliser « Fermer les autres onglets » ou quitter Tabby ne demande qu'une fois.
 
 La boîte de dialogue suit la langue choisie dans Tabby et reprend ses propres traductions. La
 touche Entrée choisit « Annuler », pour éviter une fermeture par réflexe.
@@ -44,17 +47,14 @@ npm install
 npm run build
 ```
 
-Le plugin compilé est écrit dans `dist/`. Pour l'essayer sans l'installer, lancer Tabby avec la
-variable `TABBY_PLUGINS` pointant sur le dossier qui contient `tabby-confirm-close`.
+Le plugin compilé est écrit dans `dist/`.
 
 ## Limites connues
 
-La confirmation est demandée pour chaque panneau terminal, pas pour chaque action de fermeture :
-
-- sur un onglet local où un processus tourne encore, deux confirmations s'enchaînent : celle du
-  plugin, puis celle que Tabby affiche déjà dans ce cas ;
-- fermer Tabby demande une confirmation par onglet ouvert ;
-- fermer un onglet scindé ouvre une boîte par panneau.
+- Sur un onglet local où un processus tourne encore, deux confirmations s'enchaînent : celle du
+  plugin, puis celle que Tabby affiche déjà dans ce cas.
+- Fermer un seul panneau d'un onglet scindé, ou changer le profil d'un panneau, n'est pas
+  confirmé.
 
 ## Licence
 

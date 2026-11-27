@@ -5,7 +5,10 @@ English | [Français](README.fr.md)
 [![npm](https://img.shields.io/npm/v/tabby-confirm-close)](https://www.npmjs.com/package/tabby-confirm-close)
 
 A [Tabby](https://github.com/Eugeny/tabby) plugin that asks for confirmation before closing a
-terminal tab: local, SSH, Telnet, serial.
+tab, whatever its type: local, SSH, Telnet, serial, settings.
+
+One dialog is shown per closing action, listing the tabs about to close: closing a split tab,
+using "Close other tabs" or quitting Tabby asks only once.
 
 The dialog follows Tabby's language setting and reuses Tabby's own translations. Pressing Enter
 selects Cancel, so a tab is never closed by reflex.
@@ -42,17 +45,13 @@ npm install
 npm run build
 ```
 
-The compiled plugin is written to `dist/`. To try it without installing it, start Tabby with the
-`TABBY_PLUGINS` environment variable pointing to the folder that contains `tabby-confirm-close`.
+The compiled plugin is written to `dist/`.
 
 ## Known limitations
 
-The confirmation is asked for each terminal pane, not for each closing action:
-
-- on a local tab where a process is still running, two confirmations follow each other: the
-  plugin's, then the one Tabby already shows in that case;
-- closing Tabby asks once per open tab;
-- closing a split tab opens one dialog per pane.
+- On a local tab where a process is still running, two confirmations follow each other: the
+  plugin's, then the one Tabby already shows in that case.
+- Closing a single pane of a split tab, or switching a pane's profile, is not confirmed.
 
 ## License
 

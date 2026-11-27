@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   release:
@@ -15,7 +16,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      # Le Trusted Publishing npm exige npm 11.5.1 ou plus.
+      - run: npm install -g npm@11
 
       # Un tag qui ne correspond pas à package.json publierait un zip mal versionné.
       - name: Vérifier la version
@@ -34,6 +39,10 @@ jobs:
           mkdir -p staging/tabby-confirm-close
           cp -r package.json README.md README.fr.md LICENSE dist staging/tabby-confirm-close/
           cd staging && zip -r "../tabby-confirm-close-${GITHUB_REF_NAME#v}.zip" tabby-confirm-close
+
+      # Publié avant la Release : un échec de npm ne laisse pas de Release sans paquet.
+      - name: Publier sur npm
+        run: npm publish
 
       - name: Publier la Release
         env:
